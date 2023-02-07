@@ -28,7 +28,7 @@ find_package(PCL REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(TBB REQUIRED)
 
-find_package(vpi 1.0 REQUIRED)
+find_package(vpi 2.0 REQUIRED)
 
 #find_package( Sophus REQUIRED )
 #include_directories( ${Sophus_INCLUDE_DIRS} )
@@ -105,6 +105,8 @@ target_link_libraries(mcvio_estimator
   ${GFLAGS_LIBRARIES}
   vpi)
 
+add_executable(calculate_T_b_c2 src/calculate_T_b_c2.cpp)
+add_executable(calculate_extrinsic src/calculate_extrinsic.cpp)
 # add_executable(
 #   pose_graph3d
 #   src/pose_graph3d.cpp
