@@ -19,7 +19,7 @@
     <arg name="vins_path" default="$(find mcvio)/config/" />
     <arg name="config_path" default="$(find mcvio)/config/MCVIO/MCVIO_estimator_euroc.yaml"/>
 
-    <node name="MCVIO_estimator" pkg="mcvio" type="mcvio_estimator" output="screen" >
+    <node name="MCVIO_estimator" pkg="mcvio" type="mcvio_estimator" output="screen" launch-prefix="xterm -e gdb -ex run --args " >
         <param name="config_file" type="string" value="$(arg config_path)" />
         <param name="vins_folder" type="string" value="$arg vins_path" />
         <param name="lio_world_frame" type="string" value="sensor_init"/>
