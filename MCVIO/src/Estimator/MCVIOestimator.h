@@ -41,6 +41,7 @@ namespace MCVIO
     {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+        // 空构造函数
         MCVIOEstimator();
         MCVIOEstimator(MCVIOfrontend* frontend);
         
