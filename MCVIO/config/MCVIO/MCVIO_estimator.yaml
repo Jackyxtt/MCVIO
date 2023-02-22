@@ -55,7 +55,7 @@ cam_0:
   image_width: 816
   image_height: 686
   visualize: 1
-  use_vpi: 0
+  use_vpi: 1
   mirror_parameters:
     xi: 1.9370645285718184
   distortion_parameters:
@@ -99,7 +99,7 @@ cam_1:
   image_width: 816
   image_height: 686
   visualize: 1
-  use_vpi: 0
+  use_vpi: 1
   mirror_parameters:
     xi: 1.8075725317445792
   distortion_parameters:
