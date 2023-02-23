@@ -28,7 +28,7 @@ find_package(PCL REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(TBB REQUIRED)
 
-find_package(vpi 1.0 REQUIRED)
+find_package(vpi 2.0 REQUIRED)
 
 #find_package( Sophus REQUIRED )
 #include_directories( ${Sophus_INCLUDE_DIRS} )

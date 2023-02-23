@@ -29,7 +29,7 @@ cam_0:
   sensor_type: 0
   left_image_topic: "/ros_frame/camera_0"
   frame_id: "cam_0"
-  camera_config_file: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/cam360/cam_0.yaml"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/cam360/cam_0.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
@@ -51,11 +51,11 @@ cam_0:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 1             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
   image_width: 816
   image_height: 686
   visualize: 1
-  use_vpi: 1
+  use_vpi: 0
   mirror_parameters:
     xi: 1.9370645285718184
   distortion_parameters:
@@ -73,7 +73,7 @@ cam_1:
   sensor_type: 0
   left_image_topic: "/ros_frame/camera_1"
   frame_id: "cam_1"
-  camera_config_file: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/cam360/cam_1.yaml"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/cam360/cam_1.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
@@ -95,11 +95,11 @@ cam_1:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 1             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
   image_width: 816
   image_height: 686
   visualize: 1
-  use_vpi: 1
+  use_vpi: 0
   mirror_parameters:
     xi: 1.8075725317445792
   distortion_parameters:
@@ -151,10 +151,6 @@ pose_graph_save_path: "/home/shiboz/visual_odometry/VINS-RGBD" # save and load p
 #unsynchronization parameters
 estimate_td: 0                      # online estimate time offset between camera and imu
 td: -0.073162                             # initial value of time offset. unit: s. readed image clock + td = real image clock (IMU clock)
-
-#rolling shutter parameters
-rolling_shutter: 0                      # 0: global shutter camera, 1: rolling shutter camera
-rolling_shutter_tr: 0.033               # unit: s. rolling shutter read out time per frame (from data sheet).
 
 #visualization parameters
 save_image: 0                   # save image in pose graph for visualization prupose; you can close this function by setting 0
