@@ -9,7 +9,7 @@ imu_topic: "/imu/data_raw"
 depth_topic: "/velodyne_points"
 laser_topic: "/velodyne_points"
 odom_topic: "/integrated_to_init"
-output_path: "/home/yao/visual_odometry/VINS-RGBD"
+output_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/results"
 
 lio_world_frame: "sensor_init"
 vins_world_frame: "vins_world"

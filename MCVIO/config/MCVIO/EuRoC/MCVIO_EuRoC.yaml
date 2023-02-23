@@ -9,7 +9,7 @@ imu_topic: "/imu0"
 depth_topic: "/velodyne_points"
 laser_topic: "/velodyne_points"
 odom_topic: "/integrated_to_init"
-output_path: "/home/yao/visual_odometry/VINS-RGBD"
+output_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/results"
 
 lio_world_frame: "sensor_init"
 vins_world_frame: "vins_world"
@@ -29,14 +29,14 @@ cam_0:
   sensor_type: 0
   left_image_topic: "/cam0/image_raw"
   frame_id: "cam_0"
-  camera_config_file: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/EuRoC/cam_0.yaml"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/cam360/cam_0.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
     dt: d
     data: [0.0148655429818, -0.999880929698, 0.00414029679422,
           0.999557249008, 0.0149672133247, 0.025715529948,
-          -0.0257744366974, 0.00375618835797, 0.999660727178,]
+          -0.0257744366974, 0.00375618835797, 0.999660727178]
   #Translation from camera frame to imu frame, imu^T_cam
   extrinsicTranslation_imu_camera: !!opencv-matrix
     rows: 3
@@ -51,7 +51,7 @@ cam_0:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
   image_width: 752
   image_height: 480
   visualize: 1
@@ -73,7 +73,7 @@ cam_1:
   sensor_type: 0
   left_image_topic: "/cam1/image_raw"
   frame_id: "cam_1"
-  camera_config_file: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/EuRoC/cam_1.yaml"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/EuRoC/cam_1.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
@@ -95,7 +95,7 @@ cam_1:
   show_track: 1           # publish tracking image as topic
   equalize: 1             # if image is too dark or light, trun on equalize to find enough features
   fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
-  fisheye_path: "/home/yao/MCVIO/src/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
   image_width: 752
   image_height: 480
   visualize: 1
