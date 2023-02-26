@@ -94,6 +94,9 @@ namespace MCVIO
         void
         processImage(const sensor_msgs::ImageConstPtr &color_msg);
 
+        void 
+        processImage(const sensor_msgs::CompressedImageConstPtr &color_msg);
+
 
         template <typename T>
         sensor_msgs::PointCloud2
@@ -138,12 +141,21 @@ namespace MCVIO
         unordered_map<string, int> tracker_tag;
 
         FrontEndResultsSynchronizer synchronizer;
+
+        bool isCompressedImage;
     };
     inline void
     img_callback(const sensor_msgs::Image::ConstPtr color_msg, MCVIOfrontend *frontend)
     {
         frontend->processImage(color_msg);
     };
+
+    inline void
+    img_callback(const sensor_msgs::CompressedImage::ConstPtr color_msg, MCVIOfrontend *frontend)
+    {
+        frontend->processImage(color_msg);
+    };
+
     inline MCVIOfrontend *MCVIOfrontend_;
 } // namespace MCVIO
 #endif // FRONTEND_H
