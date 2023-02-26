@@ -5,6 +5,7 @@
 #     MONOCULAR,
 #     UNKNOWN
 # };
+imageMsg_type: "Image"
 imu_topic: "/imu0"
 depth_topic: "/velodyne_points"
 laser_topic: "/velodyne_points"

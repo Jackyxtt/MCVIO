@@ -419,6 +419,12 @@ void MCVIOfrontend::processImage(const sensor_msgs::CompressedImageConstPtr &col
 void MCVIOfrontend::addSensors(cv::FileStorage &fsSettings, ros::NodeHandle *private_node)
 {
     auto cam_list = fsSettings["sensor_list"];
+    string imgMsg_type;
+    fsSettings["imageMsg_type"] >> imgMsg_type;
+    if(imgMsg_type == "Image")
+        compressedType = false;
+    else
+        compressedType = true;
 
     vector<string> sensor_name_list;
 
@@ -491,7 +497,7 @@ void MCVIOfrontend::addMonocular(cv::FileNode &fsSettings, ros::NodeHandle *priv
                                                   private_node,
                                                   R, T,
                                                   fx, fy, cx, cy, fisheye,
-                                                  col, row));
+                                                  col, row, compressedType));
     if (fisheye)
     {
         string fisheye_path;
@@ -575,7 +581,7 @@ MCVIOcamera::MCVIOcamera(
     Eigen::Matrix3d R,
     Eigen::Vector3d T,
     double fx, double fy, double cx, double cy, bool fisheye,
-    int col, int row) : MCVIOsensor(type, topic, name, node, R, T)
+    int col, int row, bool compressedType) : MCVIOsensor(type, topic, name, node, R, T)
 {
     this->fx = fx;
     this->fy = fy;
@@ -585,7 +591,10 @@ MCVIOcamera::MCVIOcamera(
     this->COL = col;
     this->ROW = row;
     // sub = this->frontend_node->subscribe<sensor_msgs::Image>(topic, 5, &MCVIOfrontend::img_callback);
-    sub = this->frontend_node->subscribe<sensor_msgs::Image>(topic, 5, boost::bind(&MCVIO::img_callback, _1, MCVIOfrontend_));
+    if(compressedType)
+        sub = this->frontend_node->subscribe<sensor_msgs::CompressedImage>(topic, 5, boost::bind(&MCVIO::Compressedimg_callback, _1, MCVIOfrontend_));
+    else
+        sub = this->frontend_node->subscribe<sensor_msgs::Image>(topic, 5, boost::bind(&MCVIO::img_callback, _1, MCVIOfrontend_));
     mask = cv::Mat(row, col, CV_8UC1, cv::Scalar(255));
     first_image_flag = true;
     first_image_time = 0;

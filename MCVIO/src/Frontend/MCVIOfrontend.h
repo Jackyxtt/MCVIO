@@ -142,7 +142,7 @@ namespace MCVIO
 
         FrontEndResultsSynchronizer synchronizer;
 
-        bool isCompressedImage;
+        bool compressedType;
     };
     inline void
     img_callback(const sensor_msgs::Image::ConstPtr color_msg, MCVIOfrontend *frontend)
@@ -151,7 +151,7 @@ namespace MCVIO
     };
 
     inline void
-    img_callback(const sensor_msgs::CompressedImage::ConstPtr color_msg, MCVIOfrontend *frontend)
+    Compressedimg_callback(const sensor_msgs::CompressedImage::ConstPtr color_msg, MCVIOfrontend *frontend)
     {
         frontend->processImage(color_msg);
     };

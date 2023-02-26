@@ -113,7 +113,7 @@ namespace MCVIO
                     Eigen::Matrix3d R,
                     Eigen::Vector3d T,
                     double fx, double fy, double cx, double cy, bool fisheye,
-                    int w, int h);
+                    int w, int h, bool compressedType);
         virtual ~MCVIOcamera(){};
         // MCVIOcamera* ptr(){return this;};
         bool setFisheye(string fisheye_path);
