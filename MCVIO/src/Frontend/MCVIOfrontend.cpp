@@ -419,8 +419,10 @@ void MCVIOfrontend::processImage(const sensor_msgs::CompressedImageConstPtr &col
 void MCVIOfrontend::addSensors(cv::FileStorage &fsSettings, ros::NodeHandle *private_node)
 {
     auto cam_list = fsSettings["sensor_list"];
+
     string imgMsg_type;
     fsSettings["imageMsg_type"] >> imgMsg_type;
+
     if(imgMsg_type == "Image")
         compressedType = false;
     else
@@ -439,7 +441,7 @@ void MCVIOfrontend::addSensors(cv::FileStorage &fsSettings, ros::NodeHandle *pri
         LOG(INFO) << i;
     }
 
-    for (auto i : sensor_name_list)
+    for (auto i : sensor_name_list) //遍历sensor_list列表中的相机
     {
 
         int sensor = fsSettings[i]["sensor_type"];
@@ -535,7 +537,7 @@ void MCVIOfrontend::addMonocular(cv::FileNode &fsSettings, ros::NodeHandle *priv
         // register camera
         string config_file;
         fsSettings["camera_config_file"] >> config_file;
-        tracker->readIntrinsicParameter(config_file);
+        tracker->readIntrinsicParameter(config_file);//tracker从yaml文件中读取相机参数
         LOG(INFO) << "Finish loading camera intrinsic to tracker";
         tracker->fisheye_mask = monocam->mask.clone();
         tracker_tag[name] = trackerData.size();
@@ -550,7 +552,7 @@ void MCVIOfrontend::addMonocular(cv::FileNode &fsSettings, ros::NodeHandle *priv
         // register camera
         string config_file;
         fsSettings["camera_config_file"] >> config_file;
-        tracker->readIntrinsicParameter(config_file);
+        tracker->readIntrinsicParameter(config_file);//tracker从yaml文件中读取相机参数
         LOG(INFO) << "Finish loading camera intrinsic to tracker";
         tracker->fisheye_mask = monocam->mask.clone();
         tracker_tag[name] = trackerData.size();
