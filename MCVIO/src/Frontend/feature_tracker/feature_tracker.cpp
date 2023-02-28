@@ -224,7 +224,7 @@ bool FeatureTracker::updateID(unsigned int i)
 void FeatureTracker::readIntrinsicParameter(const string &calib_file)
 {
     ROS_INFO("reading paramerter of camera %s", calib_file.c_str());
-    m_camera = CameraFactory::instance()->generateCameraFromYamlFile(calib_file);
+    m_camera = CameraFactory::instance()->generateCameraFromYamlFile(calib_file);//从yaml文件中生成相机
 }
 
 void FeatureTracker::showUndistortion(const string &name)
@@ -274,7 +274,7 @@ void FeatureTracker::undistortedPoints()
         Eigen::Vector3d b;
         // https://github.com/HKUST-Aerial-Robotics/VINS-Mono/blob/0d280936e441ebb782bf8855d86e13999a22da63/camera_model/src/camera_models/PinholeCamera.cc
         // brief Lifts a point from the image plane to its projective ray
-        m_camera->liftProjective(a, b);
+        m_camera->liftProjective(a, b);//使用针孔模型、鱼眼相机模型把点投影到相机归一化平面中
         // 特征点在相机坐标系的归一化坐标
         cur_un_pts.push_back(cv::Point2f(b.x() / b.z(), b.y() / b.z()));
         cur_un_pts_map.insert(make_pair(ids[i], cv::Point2f(b.x() / b.z(), b.y() / b.z())));
