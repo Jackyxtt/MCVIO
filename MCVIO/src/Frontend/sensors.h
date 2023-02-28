@@ -40,7 +40,7 @@
 #include <map>
 #include <Eigen/Dense>
 
-#define SHOW_LOG_DEBUG 0
+#define SHOW_LOG_DEBUG 1
 
 using namespace std;
 typedef pcl::PointXYZ PointType;
