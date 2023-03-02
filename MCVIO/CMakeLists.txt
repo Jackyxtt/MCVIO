@@ -107,6 +107,8 @@ target_link_libraries(mcvio_estimator
 
 add_executable(mcvio_m2dgr_extrinsic src/calculate_m2dgr_extrinsic.cpp)
 
+add_executable(mcvio_newer_college_extrinsic src/calculate_newer_college_extrinsic.cpp)
+
 # add_executable(
 #   pose_graph3d
 #   src/pose_graph3d.cpp
