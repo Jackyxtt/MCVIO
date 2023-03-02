@@ -1,0 +1,17 @@
+%YAML:1.0
+
+#camera calibration 
+model_type: KANNALA_BRANDT
+camera_name: camera
+image_width: 1280
+image_height: 1024
+distortion_parameters:
+   k2: -0.06329338788105426  #k1
+   k3: -0.005282288794043655  #k2
+   k4: -0.01439687642303018  #k3
+   k5: 0.006593296524853555  #k4
+projection_parameters:
+   mu: 537.2294180909289  #fx
+   mv: 536.6425889117285  #fy
+   u0: 635.5687263167875   #cx
+   v0: 491.9422582452684   #cy
