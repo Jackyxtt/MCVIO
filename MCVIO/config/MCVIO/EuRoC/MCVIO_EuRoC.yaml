@@ -30,7 +30,7 @@ cam_0:
   sensor_type: 0
   left_image_topic: "/cam0/image_raw"
   frame_id: "cam_0"
-  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/cam360/cam_0.yaml"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/EuRoC/cam_0.yaml"
   extrinsicRotation_imu_camera: !!opencv-matrix
     rows: 3
     cols: 3
