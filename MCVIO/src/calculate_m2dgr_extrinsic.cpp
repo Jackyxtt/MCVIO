@@ -65,6 +65,17 @@ int main(){
     T_l_thermal.rotate(R_l_thermal);
     T_l_thermal.pretranslate(t_l_thermal);
 
+    // 右中相机到雷达
+    Isometry3d T_l_midright = Isometry3d::Identity();
+    Matrix3d R_l_midright = Matrix3d::Identity();
+    R_l_midright << -1, 0, 0,
+                   0, 0, -1,
+                   0, -1, 0;
+    Vector3d t_l_midright;
+    t_l_midright << 0.00021, -0.16013, -0.16674;
+    T_l_midright.rotate(R_l_midright);
+    T_l_midright.pretranslate(t_l_midright);
+
     // 惯导到d435i彩色相机
     Isometry3d T_b_color = Isometry3d::Identity();
     T_b_color = T_l_b.inverse() * T_l_color;
@@ -81,6 +92,10 @@ int main(){
     Isometry3d T_b_rightcam = Isometry3d::Identity();
     T_b_rightcam = T_l_b.inverse() * T_l_rightcam;
 
+    // 惯导到右相机
+    Isometry3d T_b_midright = Isometry3d::Identity();
+    T_b_midright = T_l_b.inverse() * T_l_midright;
+
     fout.open("/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/m2dgr/process_result.txt", ios::out | ios::trunc);
     fout << "T_b_color: " << endl;
     fout << T_b_color.matrix() << endl;
@@ -90,6 +105,8 @@ int main(){
     fout << T_b_leftcam.matrix() << endl;
     fout << "T_b_rightcam: " << endl;
     fout << T_b_rightcam.matrix() << endl;
+    fout << "T_b_midright: " << endl;
+    fout << T_b_midright.matrix() << endl;
     fout.close();
     // cout << T_b_color << endl;
     
