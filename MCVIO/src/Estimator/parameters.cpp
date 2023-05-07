@@ -242,6 +242,7 @@ void readParameters(ros::NodeHandle &n)
     GYR_W = fsSettings["gyr_w"];
     G.z() = fsSettings["g_norm"];
     
+    //本部分代码和雷达有关
     lidar_search_radius = fsSettings["lidar_search_radius"];
     estimate_scale = fsSettings["estimate_scale"];
     depth_support_init = 0;
@@ -249,6 +250,8 @@ void readParameters(ros::NodeHandle &n)
     PnP_simple_init = fsSettings["PnP_simple_init"];
     ESTIMATE_EXTRINSIC = fsSettings["estimate_extrinsic"];
     skip_default_init_method = fsSettings["skip_default_init_method"];
+    
+    
     if (ESTIMATE_EXTRINSIC == 2)
     {
         ROS_WARN("have no prior about extrinsic param, calibrate extrinsic param");

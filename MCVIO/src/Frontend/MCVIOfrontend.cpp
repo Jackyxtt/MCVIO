@@ -314,7 +314,7 @@ void MCVIOfrontend::processImage(const sensor_msgs::CompressedImageConstPtr &col
     for (unsigned int i = 0;; i++)
     {
         bool completed = false;
-        completed |= tracker->updateID(i);
+        completed |= tracker->updateID(i);//位或运算
         if (!completed)
             break;
     }
@@ -601,7 +601,7 @@ MCVIOcamera::MCVIOcamera(
     first_image_flag = true;
     first_image_time = 0;
     std::string match_img_topic = this->name + "/feature_image";
-    pub_match = this->frontend_node->advertise<sensor_msgs::Image>(match_img_topic.c_str(), 5);
+        pub_match = this->frontend_node->advertise<sensor_msgs::Image>(match_img_topic.c_str(), 5);
 }
 
 bool MCVIOcamera::setFisheye(string fisheye_path)

@@ -109,6 +109,7 @@ add_executable(mcvio_m2dgr_extrinsic src/calculate_m2dgr_extrinsic.cpp)
 
 add_executable(mcvio_newer_college_extrinsic src/calculate_newer_college_extrinsic.cpp)
 
+add_executable(mcvio_0117_footballcourt src/calculate_0117_footballcourt.cpp)
 # add_executable(
 #   pose_graph3d
 #   src/pose_graph3d.cpp

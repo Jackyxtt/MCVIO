@@ -411,6 +411,8 @@ int main(int argc, char **argv)
     LOG(INFO) << "Config_file:" << config_file;
 
     MCVIOfrontend frontend(config_file);
+    //因为加了MCVIO命名空间，本句相当与MCVIO::MCVIOfrontend_
+    //注意：MCVIOfrontend_指针并未定义在类内，所以通过MCVIO::MCVIOfrontend_方式调用
     MCVIOfrontend_ = &frontend;
     frontend.setUpROS(nullptr, &n);
     // LOAD TIC RIC
