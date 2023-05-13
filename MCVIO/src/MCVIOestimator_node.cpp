@@ -402,6 +402,9 @@ void process1()
 
 int main(int argc, char **argv)
 {
+    google::InitGoogleLogging(argv[0]);
+    FLAGS_log_dir = "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/log/";
+    FLAGS_alsologtostderr = 1;
     ros::init(argc, argv, "MCVIO_estimator");
     ros::NodeHandle n("~");
     ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Info);
