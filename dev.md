@@ -8,3 +8,6 @@
 
 ## 如果要对某节点进行调试，在launch文件中进行如下修改：
 ``` <node name="MCVIO_estimator" pkg="mcvio" type="mcvio_estimator" output="screen" launch-prefix="xterm -e gdb --args"> ```
+
+## 关闭边缘化功能
+MCVIOestimator.h第33行 #define USE_PRIOR

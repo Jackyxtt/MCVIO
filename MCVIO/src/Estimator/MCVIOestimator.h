@@ -29,7 +29,8 @@
 #include <opencv2/core/eigen.hpp>
 #include <opencv2/surface_matching/icp.hpp>
 
-#define VISUAL_IMU_SUM_PRIOR
+#define VISUAL_IMU_SUM_PRIOR //是否合并处理IMU和视觉的先验证信息
+#define USE_PRIOR
 #define Enalbe_Lidar_Init 0
 #define USE_ABSOLUTE_FACTOR 1
 #define SINGLE_CAM_DEBUG 0

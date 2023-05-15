@@ -1504,6 +1504,7 @@ void MCVIOEstimator::optimization()
     vector2double();
 
 #ifdef VISUAL_IMU_SUM_PRIOR
+#ifdef USE_PRIOR
     if (last_marginalization_info)
     {
         // construct new marginlization_factor
@@ -1511,7 +1512,7 @@ void MCVIOEstimator::optimization()
         problem.AddResidualBlock(marginalization_factor, nullptr,
                                  last_marginalization_parameter_blocks);
     }
-
+#endif
 #else
     if (last_visual_marginalization_info)
     {
@@ -1898,7 +1899,7 @@ void MCVIOEstimator::optimization()
         }
     }
 #else
-    if (marginalization_flag == MARGIN_OLD)
+    if (marginalization_flag == MarginalizationFlag::MARGIN_OLD)
     {
         MarginalizationInfo *visual_marginalization_info = new MarginalizationInfo();
         MarginalizationInfo *imu_marginalization_info = new MarginalizationInfo();
