@@ -142,6 +142,11 @@ namespace MCVIO
         bool PUB_THIS_FRAME = false;
         int init_pub = 0;
 
+        int max_iteration;
+        double track_precision;
+        int pyramid_levels;
+        int patch_size;
+
 
         ros::Publisher pub_match;
 

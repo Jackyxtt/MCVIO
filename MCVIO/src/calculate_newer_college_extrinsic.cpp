@@ -17,7 +17,6 @@ int main(){
 //   - [0.999968951846316, 0.001121919391599835, 0.007799784629024531, -0.046206903461258886]
 //   - [0.0, 0.0, 0.0, 1.0]
 
-    // 相机到imu
     Isometry3d T_c0_b = Isometry3d::Identity(); //一定要初始化，不然仿射矩阵叠加时会有bug
     Matrix3d R_c0_b = Matrix3d::Identity();
     R_c0_b << -0.001070287110747692, 0.9999775099474943, -0.006620731433109983,
@@ -66,6 +65,17 @@ int main(){
     T_c3_b.rotate(R_c3_b);
     T_c3_b.pretranslate(t_c3_b);
 
+    Isometry3d T_c4_b = Isometry3d::Identity(); //一定要初始化，不然仿射矩阵叠加时会有bug
+    Matrix3d R_c4_b = Matrix3d::Identity();
+    R_c4_b << 0.9999608005152463, -0.00764705302431521, -0.004463184171536622,
+                0.004463831033452346, 6.752387667768867e-05, 0.9999900347768615,
+                -0.007646675448227889, -0.9999707585827533, 0.00010165638238096575;
+
+    Vector3d t_c4_b;
+    t_c4_b << 0.006542661540990019, 0.011382357923415307, -0.0754193763154894;
+    T_c4_b.rotate(R_c4_b);
+    T_c4_b.pretranslate(t_c4_b);
+
     fout.open("/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/newer_college/process_result.txt", ios::out | ios::trunc);
     fout << "Newer College data calibration file " << endl;
     fout << "T_b_cam0: " << endl;
@@ -74,6 +84,8 @@ int main(){
     fout << T_c1_b.inverse().matrix() << endl;
     fout << "T_b_cam3: " << endl;
     fout << T_c3_b.inverse().matrix() << endl;
+    fout << "T_b_cam4: " << endl;
+    fout << T_c4_b.inverse().matrix() << endl;
     // cout << T_b_color << endl;
     
     return 0;

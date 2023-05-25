@@ -69,6 +69,10 @@ cam_0:
     fy: 4.5975286598073296e+02
     cx: 3.6265929181685937e+02
     cy: 2.4852105668448124e+02
+  max_iteration: 30
+  track_precision: 0.01
+  pyramid_levels: 8
+  patch_size: 15
 
 cam_1:
   sensor_type: 0
@@ -113,6 +117,10 @@ cam_1:
     fy: 4.5890983492218902e+02
     cx: 3.7314916359808268e+02
     cy: 2.5440734973672119e+02
+  max_iteration: 30
+  track_precision: 0.01
+  pyramid_levels: 8
+  patch_size: 15
 
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.

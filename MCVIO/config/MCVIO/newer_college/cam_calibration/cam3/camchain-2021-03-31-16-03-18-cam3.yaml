@@ -1,0 +1,9 @@
+cam0:
+  cam_overlaps: []
+  camera_model: pinhole
+  distortion_coeffs: [-0.04738389395412899, 0.006350363749183408, -0.006374581267773348,
+    0.0016867546434477334]
+  distortion_model: equidistant
+  intrinsics: [355.585513023454, 354.4708924377204, 359.1699883054597, 246.0908212151934]
+  resolution: [720, 540]
+  rostopic: /alphasense_driver_ros/cam3

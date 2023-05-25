@@ -41,6 +41,8 @@ namespace MCVIO
         // void readImage(const cv::Mat &_img, const cv::Mat &_depth, double _cur_time);
         void readImage(const cv::Mat &_img, double _cur_time);
 
+        void createImagePyramids(const cv::Mat img);
+
         void setMask();
 
         void addPoints();
@@ -70,6 +72,11 @@ namespace MCVIO
         vector<cv::Point2f> prev_pts, cur_pts, forw_pts;
         vector<cv::Point2f> prev_un_pts, cur_un_pts;
         vector<cv::Point2f> pts_velocity;
+
+        std::vector<cv::Mat> cur_img_pyramid_;
+        std::vector<cv::Mat> prev_img_pyramid_;
+        std::vector<cv::Mat> forw_img_pyramid_;
+        std::vector<cv::Mat> img_pyramid_;
         /* move to tracker base
         vector<int> ids;
         vector<int> track_cnt;

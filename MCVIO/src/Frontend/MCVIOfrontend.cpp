@@ -558,6 +558,11 @@ void MCVIOfrontend::addMonocular(cv::FileNode &fsSettings, ros::NodeHandle *priv
         tracker_tag[name] = trackerData.size();
         trackerData.push_back(tracker);
     }
+
+    fsSettings["max_iteration"] >> monocam->max_iteration;
+    fsSettings["track_precision"] >> monocam->track_precision;
+    fsSettings["pyramid_levels"] >> monocam->pyramid_levels;
+    fsSettings["patch_size"] >> monocam->patch_size;
 }
 
 MCVIOsensor::MCVIOsensor(sensor_type stype,

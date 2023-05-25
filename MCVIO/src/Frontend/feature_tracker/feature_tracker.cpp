@@ -77,6 +77,16 @@ void FeatureTracker::addPoints()
     }
 }
 
+void FeatureTracker::createImagePyramids(const cv::Mat img){
+
+    img_pyramid_.clear();
+    cv::buildOpticalFlowPyramid(
+        img, img_pyramid_,
+        cv::Size(cam->patch_size, cam->patch_size),
+        cam->pyramid_levels, true, cv::BORDER_REFLECT_101,
+        cv::BORDER_CONSTANT, false);
+}
+
 //接收深度值
 void FeatureTracker::readImage(const cv::Mat &_img, double _cur_time)
 {
@@ -94,26 +104,43 @@ void FeatureTracker::readImage(const cv::Mat &_img, double _cur_time)
     else
         img = _img;
 
-    if (forw_img.empty())
+    createImagePyramids(img);
+
+    if (forw_img_pyramid_.empty())
     {
         // curr_img<--->forw_img
         prev_img = cur_img = forw_img = img;
+        prev_img_pyramid_ = cur_img_pyramid_ = forw_img_pyramid_ = img_pyramid_;
         // prev_depth = cur_depth = forw_depth = _depth;
     }
     else
     {
         forw_img = img;
+        forw_img_pyramid_ = img_pyramid_;
         // forw_depth = _depth;
     }
 
     forw_pts.clear();
+    forw_pts = cur_pts;
 
     if (cur_pts.size() > 0)
     {
         TicToc t_o;
         vector<uchar> status;
         vector<float> err;
-        cv::calcOpticalFlowPyrLK(cur_img, forw_img, cur_pts, forw_pts, status, err, cv::Size(21, 21), 3);
+        // cv::calcOpticalFlowPyrLK(cur_img, forw_img, cur_pts, forw_pts, status, err, cv::Size(21, 21), 3);
+        cv::calcOpticalFlowPyrLK(
+        cur_img_pyramid_, forw_img_pyramid_, 
+        cur_pts, forw_pts, 
+        status, err, 
+        cv::Size(cam->patch_size, cam->patch_size),
+        cam->pyramid_levels,
+        cv::TermCriteria(cv::TermCriteria::COUNT+cv::TermCriteria::EPS,
+            cam->max_iteration,
+            cam->track_precision),
+        cv::OPTFLOW_USE_INITIAL_FLOW);
+        
+        
         // LOG(INFO)<<"Optical Flow";
         for (int i = 0; i < int(forw_pts.size()); i++)
             if (status[i] && !inBorder(forw_pts[i]))
@@ -164,10 +191,13 @@ void FeatureTracker::readImage(const cv::Mat &_img, double _cur_time)
         ROS_DEBUG("selectFeature costs: %fms", t_a.toc());
     }
     prev_img = cur_img;
+    prev_img_pyramid_ = cur_img_pyramid_;
     // prev_depth = cur_depth;
     prev_pts = cur_pts;
     prev_un_pts = cur_un_pts;
+
     cur_img = forw_img;
+    cur_img_pyramid_ = forw_img_pyramid_;
     // cur_depth = forw_depth;
     cur_pts = forw_pts;
     undistortedPoints();

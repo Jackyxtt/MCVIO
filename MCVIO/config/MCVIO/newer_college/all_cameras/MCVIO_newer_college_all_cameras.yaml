@@ -1,0 +1,284 @@
+%YAML:1.0
+
+# enum camera_type
+# {
+#     MONOCULAR,
+#     UNKNOWN
+# };
+imageMsg_type: "CompressedImage"
+imu_topic: "/alphasense_driver_ros/imu"
+depth_topic: "/velodyne_points"
+laser_topic: "/velodyne_points"
+odom_topic: "/integrated_to_init"
+output_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/results"
+
+lio_world_frame: "sensor_init"
+vins_world_frame: "vins_world"
+camera_frame: "vins_camera"
+lio_laser_frame: "sensor"
+laser_frame: "sensor"
+vins_imu_frame: "vins_imu"
+
+use_lidar_odom_meas: 0 # 1   means use lidar odometry constraints in vins system
+scale_lidar_absolute_factor: 3
+
+align_camera_lidar_estimation: 0 # align camera and lidar estimation for visualization
+
+sensor_list: ['cam_0','cam_1','cam_3','cam_4']
+# !!!assume you have preprocess the EuRoC bag and assign correct frame_id to camera topics
+cam_0:
+  sensor_type: 0
+  left_image_topic: "/alphasense_driver_ros/cam0/compressed"
+  frame_id: "cam0_sensor_frame"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/newer_college/all_cameras/cam_0.yaml"
+  extrinsicRotation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 3
+    dt: d
+    data: [-0.00107029, -0.00780704, 0.999969,
+          0.999978, 0.00661218, 0.00112192,
+          -0.00662073, 0.999948, 0.00779978]
+  #Translation from camera frame to imu frame, imu^T_cam
+  extrinsicTranslation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 1
+    dt: d
+    data: [0.0462293, 0.0469568, -0.00943954]
+  #feature traker parameters
+  max_cnt: 150          # max feature number in feature tracking
+  min_dist: 30            # min distance between two features
+  freq: 13                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image
+  F_threshold: 1.0        # ransac threshold (pixel)
+  show_track: 1           # publish tracking image as topic
+  equalize: 1             # if image is too dark or light, trun on equalize to find enough features
+  fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  image_width: 720
+  image_height: 540
+  visualize: 1
+  use_vpi: 0
+  mirror_parameters:
+    xi: 1.9370645285718184
+  distortion_parameters:
+    k1: -0.03908623683636908
+    k2: -0.008364734078508202
+    p1: 0.006865315014140142
+    p2:  -0.0022325156415695015
+  projection_parameters:
+    fx: 353.83530850045827
+    fy: 353.08084839605925
+    cx: 354.9603638484091
+    cy: 261.96623968254306
+  max_iteration: 30
+  track_precision: 0.01
+  pyramid_levels: 8
+  patch_size: 15
+
+cam_1:
+  sensor_type: 0
+  left_image_topic: "/alphasense_driver_ros/cam1/compressed"
+  frame_id: "cam1_sensor_frame"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/newer_college/all_cameras/cam_1.yaml"
+  extrinsicRotation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 3
+    dt: d
+    data: [0.00985832, -0.000999065, 0.999951,
+            0.999949, -0.00229559, -0.0098606,
+            0.00230532, 0.999997, 0.000976383]
+  #Translation from camera frame to imu frame, imu^T_cam
+  extrinsicTranslation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 1
+    dt: d
+    data: [0.0456618, -0.0642128, -0.0101862]
+  #feature traker paprameters
+  max_cnt: 150          # max feature number in feature tracking
+  min_dist: 30            # min distance between two features
+  freq: 13                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image
+  F_threshold: 1.0        # ransac threshold (pixel)
+  show_track: 1           # publish tracking image as topic
+  equalize: 1             # if image is too dark or light, trun on equalize to find enough features
+  fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  image_width: 720
+  image_height: 540
+  visualize: 1
+  use_vpi: 0
+  mirror_parameters:
+    xi: 1.8075725317445792
+  distortion_parameters:
+    k1: -0.039027237686972804
+    k2: -0.007007232658408612
+    p1: 0.004840825566050042
+    p2: -0.001621433395224995
+  projection_parameters:
+    fx: 353.6540189302263
+    fy: 353.01548372647176
+    cx: 362.4407167511296
+    cy: 288.4941881913415
+  max_iteration: 30
+  track_precision: 0.01
+  pyramid_levels: 8
+  patch_size: 15
+
+cam_3:
+  sensor_type: 0
+  left_image_topic: "/alphasense_driver_ros/cam3/compressed"
+  frame_id: "cam3_sensor_frame"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/newer_college/all_cameras/cam_3.yaml"
+  extrinsicRotation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 3
+    dt: d
+    data: [-0.999977,  0.00671313, 0.000924228,
+            0.000853516,  -0.0105286, 0.999944,
+            0.00672249,   0.999922,  0.0105226]
+  #Translation from camera frame to imu frame, imu^T_cam
+  extrinsicTranslation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 1
+    dt: d
+    data: [-0.00578888, 0.0525753, -0.011664]
+  #feature traker paprameters
+  max_cnt: 150          # max feature number in feature tracking
+  min_dist: 30            # min distance between two features
+  freq: 13                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image
+  F_threshold: 1.0        # ransac threshold (pixel)
+  show_track: 1           # publish tracking image as topic
+  equalize: 1             # if image is too dark or light, trun on equalize to find enough features
+  fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  image_width: 720
+  image_height: 540
+  visualize: 1
+  use_vpi: 0
+  mirror_parameters:
+    xi: 1.8075725317445792
+  distortion_parameters:
+    k1: -0.04738389395412899
+    k2: 0.006350363749183408
+    p1: -0.006374581267773348
+    p2: 0.0016867546434477334
+  projection_parameters:
+    fx: 355.585513023454
+    fy: 354.4708924377204
+    cx: 359.1699883054597
+    cy: 246.0908212151934
+  max_iteration: 30
+  track_precision: 0.01
+  pyramid_levels: 8
+  patch_size: 15
+
+cam_4:
+  sensor_type: 0
+  left_image_topic: "/alphasense_driver_ros/cam4/compressed"
+  frame_id: "cam4_sensor_frame"
+  camera_config_file: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/newer_college/all_cameras/cam_4.yaml"
+  extrinsicRotation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 3
+    dt: d
+    data: [0.999961,  0.00446383, -0.00764668,
+            -0.00764705, 6.75239e-05, -0.999971,
+            -0.00446318,  0.99999, 0.000101656]
+  #Translation from camera frame to imu frame, imu^T_cam
+  extrinsicTranslation_imu_camera: !!opencv-matrix
+    rows: 3
+    cols: 1
+    dt: d
+    data: [-0.00716992, -0.0753679, -0.0113454]
+  #feature traker paprameters
+  max_cnt: 150          # max feature number in feature tracking
+  min_dist: 30            # min distance between two features
+  freq: 13                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image
+  F_threshold: 1.0        # ransac threshold (pixel)
+  show_track: 1           # publish tracking image as topic
+  equalize: 1             # if image is too dark or light, trun on equalize to find enough features
+  fisheye: 0             # if using fisheye, trun on it. A circle mask will be loaded to remove edge noisy points
+  fisheye_path: "/home/ros/dev_workspace/MCVIO_ws/src/MCVIO/MCVIO/config/MCVIO/fisheye_mask.jpg"
+  image_width: 720
+  image_height: 540
+  visualize: 1
+  use_vpi: 0
+  mirror_parameters:
+    xi: 1.8075725317445792
+  distortion_parameters:
+    k1: -0.03713375423447921
+    k2: -0.007489770634057738
+    p1: 0.003287983152377356
+    p2: -0.0008136114053480689
+  projection_parameters:
+    fx: 351.6547241343154
+    fy: 350.97590029372265
+    cx: 342.91570997688115
+    cy: 288.27050308689036
+  max_iteration: 30
+  track_precision: 0.01
+  pyramid_levels: 8
+  patch_size: 15
+
+# Extrinsic parameter between IMU and Camera.
+estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+  # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
+# 2  Don't know anything about extrinsic parameters. You don't need to give R,T. We will try to calibrate it. Do some rotation movement at beginning.
+#If you choose 0 or 1, you should write down the following matrix.
+#Rotation from camera frame to imu frame, imu^R_cam
+
+#optimization parameters
+max_solver_time: 0.04  # max solver itration time (ms), to guarantee real time
+max_num_iterations: 8   # max solver itrations, to guarantee real time
+keyframe_parallax: 10.0 # keyframe selection threshold (pixel)
+
+#imu parameters       The more accurate parameters you provide, the better performance
+#for handheld, wheeld
+acc_n: 0.1          # accelerometer measurement noise standard deviation. 
+gyr_n: 0.01         # gyroscope measurement noise standard deviation.     
+acc_w: 0.001        # accelerometer bias random work noise standard deviation.  
+gyr_w: 0.0001       # gyroscope bias random work noise standard deviation.     
+g_norm: 9.81007     # gravity magnitude
+
+#for tracked applications
+#acc_n: 0.5          # accelerometer measurement noise standard deviation. #0.2
+#gyr_n: 0.01         # gyroscope measurement noise standard deviation.     #0.05
+#acc_w: 0.001         # accelerometer bias random work noise standard deviation.  #0.02
+#gyr_w: 2.0e-5       # gyroscope bias random work noise standard deviation.     #4.0e-5
+
+g_norm: 9.81007       # gravity magnitude
+
+#loop closure parameters
+loop_closure: 0                    # start loop closure
+fast_relocalization: 0             # useful in real-time and large project
+load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
+pose_graph_save_path: "/home/shiboz/visual_odometry/VINS-RGBD" # save and load path
+
+#unsynchronization parameters
+estimate_td: 0                      # online estimate time offset between camera and imu
+td: 0                          # initial value of time offset. unit: s. readed image clock + td = real image clock (IMU clock)
+
+#rolling shutter parameters
+rolling_shutter: 0                      # 0: global shutter camera, 1: rolling shutter camera
+rolling_shutter_tr: 0.033               # unit: s. rolling shutter read out time per frame (from data sheet).
+
+#visualization parameters
+save_image: 0                   # save image in pose graph for visualization prupose; you can close this function by setting 0
+visualize_imu_forward: 0        # output imu forward propogation to achieve low latency and high frequence results
+visualize_camera_size: 0.4      # size of camera marker in RVIZ
+
+# Kd tree search parameter
+lidar_search_radius: 0.1
+
+# debug
+# whether to estimate scale when lidar provided
+estimate_scale: 1
+scale: 0.5
+depth_support_init: 0
+skip_default_init_method: 0
+
+# PnP simple init, depth information should be provided
+PnP_simple_init: 0
+
+
+#rolling shutter parameters
+rolling_shutter: 0                      # 0: global shutter camera, 1: rolling shutter camera
+rolling_shutter_tr: 0.033               # unit: s. rolling shutter read out time per frame (from data sheet).

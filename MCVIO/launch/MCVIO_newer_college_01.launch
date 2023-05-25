@@ -12,4 +12,6 @@
         <param name="vins_imu_frame" type="string" value="vins_imu"/>
         <param name="camera_frame" type="string" value="vins_camera"/>
     </node>
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mcvio)/launch/MCVIO_VIEW.rviz"/>
+    
 </launch>
