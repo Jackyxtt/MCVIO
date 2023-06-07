@@ -48,12 +48,7 @@ void MCVIOfrontend::processImage(const sensor_msgs::ImageConstPtr &color_msg)
         cam->first_image_flag = false;
         cam->first_image_time = color_msg->header.stamp.toSec();
         cam->last_image_time = color_msg->header.stamp.toSec();
-        if (cam->USE_VPI)
-        {
-            std::shared_ptr<VPIFeatureTracker> vpi_tracker = dynamic_pointer_cast<VPIFeatureTracker>(tracker);
-            vpi_tracker->initVPIData(color_msg);
-        }
-        return;
+
     }
     // detect unstable camera stream
     if (color_msg->header.stamp.toSec() - cam->last_image_time > 1.0 || color_msg->header.stamp.toSec() < cam->last_image_time)
@@ -249,13 +244,7 @@ void MCVIOfrontend::processImage(const sensor_msgs::CompressedImageConstPtr &col
         cam->first_image_flag = false;
         cam->first_image_time = color_msg->header.stamp.toSec();
         cam->last_image_time = color_msg->header.stamp.toSec();
-        // 暂时未改VPI使用CompressedImage的接口
-        // if (cam->USE_VPI)
-        // {
-        //     std::shared_ptr<VPIFeatureTracker> vpi_tracker = dynamic_pointer_cast<VPIFeatureTracker>(tracker);
-        //     vpi_tracker->initVPIData(color_msg);
-        // }
-        // return;
+
     }
     // detect unstable camera stream
     if (color_msg->header.stamp.toSec() - cam->last_image_time > 1.0 || color_msg->header.stamp.toSec() < cam->last_image_time)
@@ -527,23 +516,6 @@ void MCVIOfrontend::addMonocular(cv::FileNode &fsSettings, ros::NodeHandle *priv
 
     sensors.push_back(monocam);
 
-    fsSettings["use_vpi"] >> monocam->USE_VPI;
-    if (monocam->USE_VPI)
-    {
-        std::shared_ptr<VPIFeatureTracker> tracker =
-            std::make_shared<VPIFeatureTracker>(VPIFeatureTracker());
-
-        tracker->cam = monocam;
-        // register camera
-        string config_file;
-        fsSettings["camera_config_file"] >> config_file;
-        tracker->readIntrinsicParameter(config_file);//tracker从yaml文件中读取相机参数
-        LOG(INFO) << "Finish loading camera intrinsic to tracker";
-        tracker->fisheye_mask = monocam->mask.clone();
-        tracker_tag[name] = trackerData.size();
-        trackerData.push_back(tracker);
-    }
-    else
     {
         std::shared_ptr<FeatureTracker> tracker =
             std::make_shared<FeatureTracker>(FeatureTracker());

@@ -28,8 +28,6 @@ find_package(PCL REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(TBB REQUIRED)
 
-find_package(vpi 2.0 REQUIRED)
-
 #find_package( Sophus REQUIRED )
 #include_directories( ${Sophus_INCLUDE_DIRS} )
 include_directories(thirdparty/Sophus)
@@ -52,38 +50,37 @@ catkin_package(CATKIN_DEPENDS camera_model)
 #   src/test_main.cpp
 #   )
 
-add_executable(mcvio_estimator
+# add_executable(mcvio_estimator
   
-  src/Frontend/feature_tracker/trackerbase.cpp
-  src/Frontend/feature_tracker/feature_tracker.cpp
-  src/Frontend/feature_tracker/vpi_feature_tracker.cpp
+#   src/Frontend/feature_tracker/trackerbase.cpp
+#   src/Frontend/feature_tracker/feature_tracker.cpp
   
-  src/Frontend/sensors.cpp
-  src/Frontend/MCVIOfrontend.cpp
+#   src/Frontend/sensors.cpp
+#   src/Frontend/MCVIOfrontend.cpp
 
-  src/Estimator/MCVIOestimator.cpp
-  src/Estimator/MCVIOfeature_manager.cpp
-  src/Estimator/parameters.cpp
+#   src/Estimator/MCVIOestimator.cpp
+#   src/Estimator/MCVIOfeature_manager.cpp
+#   src/Estimator/parameters.cpp
   
-  src/Estimator/factor/pose_local_parameterization.cpp
-  src/Estimator/factor/projection_factor.cpp
-  src/Estimator/factor/projection_td_factor.cpp
-  src/Estimator/factor/marginalization_factor.cpp
-  src/Estimator/factor/SE3AbsolutatePoseFactor.cpp
+#   src/Estimator/factor/pose_local_parameterization.cpp
+#   src/Estimator/factor/projection_factor.cpp
+#   src/Estimator/factor/projection_td_factor.cpp
+#   src/Estimator/factor/marginalization_factor.cpp
+#   src/Estimator/factor/SE3AbsolutatePoseFactor.cpp
 
-  src/utility/utility.cpp
-  src/utility/visualization.cpp
-  src/utility/CameraPoseVisualization.cpp
+#   src/utility/utility.cpp
+#   src/utility/visualization.cpp
+#   src/utility/CameraPoseVisualization.cpp
 
-  src/Estimator/initial/solve_5pts.cpp
-  src/Estimator/initial/initial_sfm.cpp
-  src/Estimator/initial/initial_aligment.cpp
-  src/Estimator/initial/initial_ex_rotation.cpp
+#   src/Estimator/initial/solve_5pts.cpp
+#   src/Estimator/initial/initial_sfm.cpp
+#   src/Estimator/initial/initial_aligment.cpp
+#   src/Estimator/initial/initial_ex_rotation.cpp
 
-  src/MCVIOestimator_node.cpp
-)
+#   src/MCVIOestimator_node.cpp
+# )
 # add_dependencies(mcviofrontend_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(mcvio_estimator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(mcvio_estimator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 # target_link_libraries(mcviofrontend_test
@@ -95,21 +92,57 @@ add_dependencies(mcvio_estimator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EX
 #   ${GLOG_LIBRARIES}
 #   ${GFLAGS_LIBRARIES})
 
-target_link_libraries(mcvio_estimator
-  ${catkin_LIBRARIES}
-  ${TBB_LIBRARIES}
-  ${OpenCV_LIBS}
-  ${PCL_LIBRARIES}
-  ${CERES_LIBRARIES}
-  ${GLOG_LIBRARIES}
-  ${GFLAGS_LIBRARIES}
-  vpi)
+# target_link_libraries(mcvio_estimator
+#   ${catkin_LIBRARIES}
+#   ${TBB_LIBRARIES}
+#   ${OpenCV_LIBS}
+#   ${PCL_LIBRARIES}
+#   ${CERES_LIBRARIES}
+#   ${GLOG_LIBRARIES}
+#   ${GFLAGS_LIBRARIES})
 
 add_executable(mcvio_m2dgr_extrinsic src/calculate_m2dgr_extrinsic.cpp)
 
 add_executable(mcvio_newer_college_extrinsic src/calculate_newer_college_extrinsic.cpp)
 
 add_executable(mcvio_0117_footballcourt src/calculate_0117_footballcourt.cpp)
+
+add_library(utility SHARED 
+            src/utility/utility.cpp 
+            src/utility/CameraPoseVisualization.cpp 
+            src/Estimator/parameters.cpp)
+target_link_libraries(utility ${catkin_LIBRARIES} ${OpenCV_LIBS})
+
+add_library(initial SHARED 
+            src/Estimator/initial/solve_5pts.cpp 
+            src/Estimator/initial/initial_sfm.cpp
+            src/Estimator/initial/initial_aligment.cpp 
+            src/Estimator/initial/initial_ex_rotation.cpp)
+target_link_libraries(initial utility)
+
+add_library(factors SHARED 
+            src/Estimator/factor/pose_local_parameterization.cpp
+            src/Estimator/factor/projection_factor.cpp
+            src/Estimator/factor/projection_td_factor.cpp
+            src/Estimator/factor/marginalization_factor.cpp
+            src/Estimator/factor/SE3AbsolutatePoseFactor.cpp)
+target_link_libraries(factors utility ${CERES_LIBRARIES})
+
+add_library(frontend 
+               src/Frontend/feature_tracker/trackerbase.cpp
+               src/Frontend/feature_tracker/feature_tracker.cpp
+               src/Frontend/sensors.cpp
+               src/Frontend/MCVIOfrontend.cpp)   
+target_link_libraries(frontend utility)                  
+
+add_executable(mcvio_estimator 
+               src/MCVIOestimator_node.cpp 
+               src/Estimator/MCVIOestimator.cpp 
+               src/Estimator/MCVIOfeature_manager.cpp
+               src/utility/visualization.cpp)
+target_link_libraries(mcvio_estimator initial factors frontend
+                      ${TBB_LIBRARIES} ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES} ${PCL_LIBRARIES})
+
 # add_executable(
 #   pose_graph3d
 #   src/pose_graph3d.cpp

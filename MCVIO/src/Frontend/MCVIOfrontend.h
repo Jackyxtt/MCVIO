@@ -47,7 +47,6 @@
 #include "MCVIOfrontend_data.h"
 #include "feature_tracker/trackerbase.h"
 #include "feature_tracker/feature_tracker.h"
-#include "feature_tracker/vpi_feature_tracker.h"
 
 #include "sensors.h"
 #include "../utility/CameraPoseVisualization.h"
